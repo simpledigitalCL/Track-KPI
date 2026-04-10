@@ -8,6 +8,7 @@
     'data': [
         'views/invoice_report_views.xml',
     ],
-    'installable': True,
-    'application': True,
+'application': True,
+'name': 'TrackKPI',
+'summary': 'KPIs comerciales y análisis,
 }
