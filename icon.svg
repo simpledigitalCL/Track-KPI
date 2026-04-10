@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#636DA9"/>
+  <path fill="#FFFFFF" d="M64 96c0-17.7 14.3-32 32-32h320c17.7 0 32 14.3 32 32v320c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96zm64 32v64h256v-64H128zm0 96v64h128v-64H128zm160 0v64h96v-64h-96zM128 320v64h256v-64H128z"/>
+</svg>
+
+
+y se puede pegar el codigo directo en el modulo en vez de cargar el svg?
