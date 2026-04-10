@@ -1,55 +1,78 @@
 <odoo>
-
-    <!-- LIST -->
-    <record id="view_track_kpi_list" model="ir.ui.view">
-        <field name="name">track.kpi.invoice.report.list</field>
-        <field name="model">track.kpi.invoice.report</field>
+    <!-- Lista: mismos datos que Estadísticas de facturas + KPI descuento -->
+    <record id="view_account_invoice_report_tree_track_kpi" model="ir.ui.view">
+        <field name="name">account.invoice.report.list.track.kpi</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.account_invoice_report_view_tree"/>
         <field name="arch" type="xml">
-            <list>
-                <field name="invoice_date"/>
-                <field name="partner_id"/>
-                <field name="product_id"/>
-                <field name="quantity"/>
-                <field name="price_unit_before_discount"/>
-                <field name="discount_percent"/>
-                <field name="price_unit_after_discount"/>
-                <field name="subtotal_after_discount"/>
-                <field name="discount_impact"/>
-            </list>
+            <xpath expr="//field[@name='price_subtotal']" position="after">
+                <field name="kpi_discount_percent" optional="show"/>
+                <field name="kpi_price_unit" optional="hide"/>
+                <field name="kpi_subtotal_list_price" optional="hide" sum="Total"/>
+                <field name="kpi_discount_impact" optional="show" sum="Total"/>
+            </xpath>
         </field>
     </record>
 
-    <!-- PIVOT -->
-    <record id="view_track_kpi_pivot" model="ir.ui.view">
-        <field name="name">track.kpi.invoice.report.pivot</field>
-        <field name="model">track.kpi.invoice.report</field>
+    <record id="view_account_invoice_report_pivot_track_kpi" model="ir.ui.view">
+        <field name="name">account.invoice.report.pivot.track.kpi</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.view_account_invoice_report_pivot"/>
         <field name="arch" type="xml">
-            <pivot>
-                <field name="subtotal_after_discount" type="measure"/>
-                <field name="discount_impact" type="measure"/>
-                <field name="discount_percent" type="measure"/>
-
-                <field name="invoice_date" interval="month" type="row"/>
-                <field name="invoice_user_id" type="col"/>
-            </pivot>
+            <xpath expr="//field[@name='price_subtotal']" position="after">
+                <field name="kpi_discount_impact" type="measure"/>
+                <field name="kpi_discount_percent" type="measure"/>
+            </xpath>
         </field>
     </record>
 
-    <!-- ACTION -->
+    <record id="view_account_invoice_report_graph_track_kpi" model="ir.ui.view">
+        <field name="name">account.invoice.report.graph.track.kpi</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.view_account_invoice_report_graph"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_subtotal']" position="after">
+                <field name="kpi_discount_impact" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="action_track_kpi" model="ir.actions.act_window">
-        <field name="name">Track KPI Ventas</field>
-        <field name="res_model">track.kpi.invoice.report</field>
-        <field name="view_mode">list,pivot</field>
+        <field name="name">Track KPI — Facturación</field>
+        <field name="res_model">account.invoice.report</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="context">{
+            'search_default_customer': 1,
+            'search_default_current': 1,
+            'group_by': ['invoice_date:month'],
+            'group_by_no_leaf': 1,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Mismo origen que <strong>Estadísticas de facturas</strong> (<code>account.invoice.report</code>):
+                líneas de producto con importes en moneda de la empresa.
+            </p>
+            <p>
+                Los campos <em>Descuento línea</em> e <em>Impacto descuento</em> se calculan a partir del
+                porcentaje de descuento en cada línea de factura (<code>account.move.line.discount</code>).
+            </p>
+        </field>
     </record>
-<!-- MENÚ ROOT (APP PRINCIPAL) -->
-<menuitem id="menu_track_kpi_root"
-          name="TrackKPI"
-          sequence="10"
-          web_icon="track_kpi,static/description/icon.png"/>
 
-<!-- MENÚ INTERNO -->
-<menuitem id="menu_track_kpi_report"
-          name="Reporte KPI"
-          parent="menu_track_kpi_root"
-          action="action_track_kpi"/>
+    <menuitem id="menu_track_kpi_root"
+              name="TrackKPI"
+              sequence="15"
+              web_icon="track_kpi,static/description/icon.png"/>
+
+    <menuitem id="menu_track_kpi_report"
+              name="Facturación y descuentos"
+              parent="menu_track_kpi_root"
+              action="action_track_kpi"
+              sequence="10"/>
+
+    <menuitem id="menu_track_kpi_from_sales"
+              name="Track KPI (facturación)"
+              parent="sale.sale_menu_root"
+              action="action_track_kpi"
+              sequence="28"/>
 </odoo>
