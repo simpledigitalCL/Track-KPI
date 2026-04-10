@@ -10,5 +10,5 @@
     ],
 'application': True,
 'name': 'TrackKPI',
-'summary': 'KPIs comerciales y análisis,
+'summary': 'KPIs comerciales y análisis',
 }
