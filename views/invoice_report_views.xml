@@ -41,12 +41,15 @@
         <field name="res_model">track.kpi.invoice.report</field>
         <field name="view_mode">list,pivot</field>
     </record>
+<!-- MENÚ ROOT (APP PRINCIPAL) -->
+<menuitem id="menu_track_kpi_root"
+          name="TrackKPI"
+          sequence="10"
+          web_icon="track_kpi,static/description/icon.png"/>
 
-    <!-- MENÚ -->
-    <menuitem id="menu_track_kpi_root" name="Track KPI" sequence="10"/>
-    <menuitem id="menu_track_kpi_report"
-              name="Reporte Ventas"
-              parent="menu_track_kpi_root"
-              action="action_track_kpi"/>
-
+<!-- MENÚ INTERNO -->
+<menuitem id="menu_track_kpi_report"
+          name="Reporte KPI"
+          parent="menu_track_kpi_root"
+          action="action_track_kpi"/>
 </odoo>
