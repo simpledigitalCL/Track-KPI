@@ -1,15 +1,20 @@
 <odoo>
-    <!-- Lista: mismos datos que Estadísticas de facturas + KPI descuento -->
-    <record id="view_account_invoice_report_tree_track_kpi" model="ir.ui.view">
+    <!-- LIST: KPI + apertura explícita de factura (informes SQL a veces bloquean many2one) -->
+    <record id="view_account_invoice_report_list_track_kpi" model="ir.ui.view">
         <field name="name">account.invoice.report.list.track.kpi</field>
         <field name="model">account.invoice.report</field>
         <field name="inherit_id" ref="account.account_invoice_report_view_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_id']" position="attributes">
+                <attribute name="options">{'no_open': False, 'no_create': True, 'no_quick_create': True}</attribute>
+            </xpath>
             <xpath expr="//field[@name='price_subtotal']" position="after">
                 <field name="kpi_discount_percent" optional="show"/>
                 <field name="kpi_price_unit" optional="hide"/>
                 <field name="kpi_subtotal_list_price" optional="hide" sum="Total"/>
                 <field name="kpi_discount_impact" optional="show" sum="Total"/>
+                <button name="action_open_move" type="object" string="Abrir factura" class="btn-link" icon="fa-external-link"
+                        title="Abrir el documento de facturación"/>
             </xpath>
         </field>
     </record>
@@ -41,20 +46,14 @@
         <field name="name">Track KPI — Facturación</field>
         <field name="res_model">account.invoice.report</field>
         <field name="view_mode">list,pivot,graph</field>
-        <field name="context">{
-            'search_default_customer': 1,
-            'search_default_current': 1,
-            'group_by': ['invoice_date:month'],
-            'group_by_no_leaf': 1,
-        }</field>
+        <field name="context">{'search_default_customer': 1, 'search_default_current': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Mismo origen que <strong>Estadísticas de facturas</strong> (<code>account.invoice.report</code>):
-                líneas de producto con importes en moneda de la empresa.
+                Mismo origen que <strong>Estadísticas de facturas</strong> (<code>account.invoice.report</code>).
             </p>
             <p>
-                Los campos <em>Descuento línea</em> e <em>Impacto descuento</em> se calculan a partir del
-                porcentaje de descuento en cada línea de factura (<code>account.move.line.discount</code>).
+                Descuento e impacto se basan en <code>account.move.line.discount</code>.
+                En pivot, el % de descuento se agrega como <strong>promedio</strong>; importes como <strong>suma</strong>.
             </p>
         </field>
     </record>
