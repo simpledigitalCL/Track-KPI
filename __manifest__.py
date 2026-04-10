@@ -1,14 +1,14 @@
 {
-    'name': 'Track KPI - Mejora tu repotería',
-    'version': '1.0',
-    'summary': 'Análisis de descuentos y KPIs comerciales',
+    'name': 'Track KPI',
+    'version': '1.1.1',
+    'summary': 'KPIs comerciales y análisis de descuentos en facturas',
     'author': 'Simpledigital',
     'category': 'Sales',
     'depends': ['account', 'sale'],
     'data': [
+        'security/ir.model.access.csv',
         'views/invoice_report_views.xml',
     ],
-'application': True,
-'name': 'TrackKPI',
-'summary': 'KPIs comerciales y análisis',
+    'application': True,
+    'installable': True,
 }
