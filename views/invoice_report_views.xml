@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_track_kpi_tree" model="ir.ui.view">
+        <field name="name">track.kpi.invoice.report.tree</field>
+        <field name="model">track.kpi.invoice.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="invoice_date"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="price_unit_before_discount"/>
+                <field name="discount_percent"/>
+                <field name="price_unit_after_discount"/>
+                <field name="subtotal_after_discount"/>
+                <field name="discount_impact"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_track_kpi_pivot" model="ir.ui.view">
+        <field name="name">track.kpi.invoice.report.pivot</field>
+        <field name="model">track.kpi.invoice.report</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="subtotal_after_discount" type="measure"/>
+                <field name="discount_impact" type="measure"/>
+                <field name="discount_percent" type="measure"/>
+                <field name="invoice_date" interval="month" type="row"/>
+                <field name="invoice_user_id" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_track_kpi" model="ir.actions.act_window">
+        <field name="name">Track KPI Ventas</field>
+        <field name="res_model">track.kpi.invoice.report</field>
+        <field name="view_mode">tree,pivot</field>
+    </record>
+
+    <menuitem id="menu_track_kpi_root" name="Track KPI" sequence="10"/>
+    <menuitem id="menu_track_kpi_report" name="Reporte Ventas"
+              parent="menu_track_kpi_root"
+              action="action_track_kpi"/>
+</odoo>
