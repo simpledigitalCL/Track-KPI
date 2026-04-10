@@ -1,8 +1,7 @@
-from . import models
+def migrate(cr, installed_version):
+    from odoo import api, SUPERUSER_ID
 
-
-def _reload_root_menu_web_icon(env):
-    """Regenera web_icon_data del menú raíz sin usar ref('módulo.xmlid') (nombre de addon variable en Odoo.sh)."""
+    env = api.Environment(cr, SUPERUSER_ID, {})
     data = env['ir.model.data'].sudo().search([
         ('model', '=', 'ir.ui.menu'),
         ('name', '=', 'menu_track_kpi_root'),
@@ -15,7 +14,3 @@ def _reload_root_menu_web_icon(env):
     mod = data.module
     menu.write({'web_icon': False})
     menu.write({'web_icon': '%s,static/description/icon.png' % mod})
-
-
-def post_init_hook(env):
-    _reload_root_menu_web_icon(env)
