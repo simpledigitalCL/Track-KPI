@@ -1,6 +1,6 @@
 {
     'name': 'Track KPI',
-    'version': '1.3.1',
+    'version': '1.3.2',
     'summary': 'KPIs sobre el informe estándar de facturas (account.invoice.report) y descuentos por línea',
     'author': 'Simpledigital',
     'category': 'Accounting',
