@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fuerza a recalcular web_icon_data del menú raíz (caché roto vs icono en Apps). -->
+    <data noupdate="0">
+        <function model="ir.ui.menu" name="write">
+            <value eval="[ref('track_kpi.menu_track_kpi_root')]"/>
+            <value eval="{'web_icon': False}"/>
+        </function>
+        <function model="ir.ui.menu" name="write">
+            <value eval="[ref('track_kpi.menu_track_kpi_root')]"/>
+            <value eval="{'web_icon': 'track_kpi,static/description/icon.png'}"/>
+        </function>
+    </data>
+</odoo>
