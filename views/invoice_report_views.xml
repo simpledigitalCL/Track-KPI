@@ -61,7 +61,7 @@
     <menuitem id="menu_track_kpi_root"
               name="TrackKPI"
               sequence="15"
-              web_icon="track_kpi,static/description/icon.webp"/>
+              web_icon="track_kpi,static/description/icon.png"/>
 
     <menuitem id="menu_track_kpi_report"
               name="Facturación y descuentos"
