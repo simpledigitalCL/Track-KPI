@@ -1,5 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Track KPI · Simplefy™
+© Simpledigital SpA — www.simpledigital.cl
+SPDX-License-Identifier: LGPL-3.0
+
+Vistas lista / pivot / gráfico para KPIs de descuento.
+List / pivot / graph views for discount KPIs.
+-->
 <odoo>
-    <!-- LIST: KPI + apertura explícita de factura (informes SQL a veces bloquean many2one) -->
+    <!-- ── Lista / List ──────────────────────────── -->
     <record id="view_account_invoice_report_list_track_kpi" model="ir.ui.view">
         <field name="name">account.invoice.report.list.track.kpi</field>
         <field name="model">account.invoice.report</field>
@@ -13,12 +22,15 @@
                 <field name="kpi_price_unit" optional="hide"/>
                 <field name="kpi_subtotal_list_price" optional="hide" sum="Total"/>
                 <field name="kpi_discount_impact" optional="show" sum="Total"/>
-                <button name="action_open_move" type="object" string="Abrir factura" class="btn-link" icon="fa-external-link"
-                        title="Abrir el documento de facturación"/>
+                <field name="kpi_currency_id" optional="hide"/>
+                <button name="action_open_move" type="object" string="Abrir factura"
+                        class="btn-link" icon="fa-external-link"
+                        title="Abrir factura / Open invoice"/>
             </xpath>
         </field>
     </record>
 
+    <!-- ── Pivot ──────────────────────────────────── -->
     <record id="view_account_invoice_report_pivot_track_kpi" model="ir.ui.view">
         <field name="name">account.invoice.report.pivot.track.kpi</field>
         <field name="model">account.invoice.report</field>
@@ -31,6 +43,7 @@
         </field>
     </record>
 
+    <!-- ── Gráfico / Graph ────────────────────────── -->
     <record id="view_account_invoice_report_graph_track_kpi" model="ir.ui.view">
         <field name="name">account.invoice.report.graph.track.kpi</field>
         <field name="model">account.invoice.report</field>
@@ -42,6 +55,7 @@
         </field>
     </record>
 
+    <!-- ── Acción y Menú / Action & Menu ──────────── -->
     <record id="action_track_kpi" model="ir.actions.act_window">
         <field name="name">Track KPI — Facturación</field>
         <field name="res_model">account.invoice.report</field>
@@ -49,11 +63,16 @@
         <field name="context">{'search_default_customer': 1, 'search_default_current': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Mismo origen que <strong>Estadísticas de facturas</strong> (<code>account.invoice.report</code>).
+                Mismo origen que <strong>Estadísticas de facturas</strong>.
+                / Same source as <strong>Invoice Statistics</strong>.
             </p>
             <p>
-                Descuento e impacto se basan en <code>account.move.line.discount</code>.
-                En pivot, el % de descuento se agrega como <strong>promedio</strong>; importes como <strong>suma</strong>.
+                KPIs de descuento sobre <code>account.move.line.discount</code>.
+                Compatible multi-moneda. Pivot: % descuento = <strong>promedio</strong>,
+                importes = <strong>suma</strong>.
+                / Discount KPIs on <code>account.move.line.discount</code>.
+                Multi-currency. Pivot: % discount = <strong>avg</strong>,
+                amounts = <strong>sum</strong>.
             </p>
         </field>
     </record>
