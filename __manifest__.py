@@ -1,15 +1,21 @@
+# -*- coding: utf-8 -*-
+# Track KPI · Simplefy™
+# © Simpledigital SpA — www.simpledigital.cl
+# SPDX-License-Identifier: LGPL-3.0
+
 {
     'name': 'Track KPI',
-    'version': '1.3.7',
-    'summary': 'KPIs sobre el informe estándar de facturas (account.invoice.report) y descuentos por línea',
+    'version': '1.4.0',
+    'summary': 'KPIs de descuento sobre facturación. Multi-moneda. / '
+               'Discount KPIs on invoice report. Multi-currency.',
     'author': 'Simpledigital',
+    'website': 'https://simpledigital.cl',
     'category': 'Accounting',
     'license': 'LGPL-3',
     'depends': ['account', 'sale'],
     'data': [
         'views/invoice_report_views.xml',
     ],
-    # Odoo.sh valida icono en PNG (cuadrado); WebP opcional como segundo recurso.
     'images': [
         'static/description/icon.png',
         'static/description/icon.webp',
